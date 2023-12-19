@@ -13,12 +13,12 @@ use yii\bootstrap5\NavBar;
 AppAsset::register($this);
 $this->beginContent('@backend/views/layouts/base.php');
 ?>
-<main class="d-flex"> <!-- original class: flex-shrink-0 -->
-    <?php echo $this->render('_sidebar')?>
 
+<main class="d-flex"> <!-- original class: flex-shrink-0 -->
     <div class="content-wrapper p-3"> <!-- original class: container -->
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </main>
+
 <?php $this->endContent(); ?>
