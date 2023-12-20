@@ -26,6 +26,8 @@ use yii\web\UploadedFile;
  * @property int|null $created_by
  *
  * @property User $createdBy
+ * @property \common\models\VideoLike[] $likes
+ * @property \common\models\VideoLike[] $dislikes
  */
 class Video extends \yii\db\ActiveRecord
 {
@@ -127,6 +129,24 @@ class Video extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return ActiveQuery
+     */
+    public function getLikes() //likes magic property
+    {
+        return $this->hasMany(VideoLike::class, ['video_id' => 'video_id'])
+            ->liked();
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getDislikes() //likes magic property
+    {
+        return $this->hasMany(VideoLike::class, ['video_id' => 'video_id'])
+            ->disliked();
+    }
+
+    /**
      * {@inheritdoc}
      * @return \common\models\query\VideoQuery the active query used by this AR class.
      */
@@ -217,5 +237,21 @@ class Video extends \yii\db\ActiveRecord
         if(file_exists($thumbnailPath)){
             unlink($thumbnailPath);
         }
+    }
+
+    public function isLikedBy($userId)
+    {
+        return VideoLike::find()
+            ->userIdVideoId($userId, $this->video_id)
+            ->liked()
+            ->one();
+    }
+
+    public function isDislikedBy($userId)
+    {
+        return VideoLike::find()
+            ->userIdVideoId($userId, $this->video_id)
+            ->disliked()
+            ->one();
     }
 }
