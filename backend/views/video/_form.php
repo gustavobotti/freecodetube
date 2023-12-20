@@ -41,11 +41,11 @@ use yii\bootstrap5\ActiveForm;
         </div>
         <div class="col-sm-4">
 
-            <div class="embed-responsive embed-responsive-16by9 mb-3">
+            <div class="embed-responsive embed-responsive-16by9 mb-3" style="max-width: 720px">
                 <video class="embed-responsive-item"
                        poster="<?php echo $model->getThumbnailLink() ?>"
                        src="<?php echo $model->getVideoLink() ?>"
-                        controls></video>
+                        controls style="max-width: 100%; height: auto;"></video>
             </div>
 
             <div class="mb-3">

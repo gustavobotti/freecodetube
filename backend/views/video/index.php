@@ -1,5 +1,4 @@
 <?php
-
 use common\models\Video;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -20,30 +19,37 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Video', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'video_id',
-            'title',
-            'description:ntext',
-            'tags',
-            'status',
-            //'has_thumbnail',
-            //'video_name',
-            //'created_at',
-            //'updated_at',
-            //'created_by',
+            [
+                'attribute' => 'title',
+                'content' => function ($model) {
+                    return $this->render('_video_item', ['model' => $model]);
+                },
+            ],
+            [
+                'attribute' => 'status',
+                'content' => function ($model) {
+                    return $model->getStatusLabels()[$model->status];
+                },
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
             [
                 'class' => ActionColumn::className(),
+                'template' => '{delete}',
+                /*'buttons' => [
+                        'delete' => function ($url) {
+                            return Html::a('Delete', $url);
+                        }
+                ],*/
                 'urlCreator' => function ($action, Video $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'video_id' => $model->video_id]);
-                 }
+                },
             ],
         ],
     ]); ?>
-
 
 </div>

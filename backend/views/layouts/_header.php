@@ -1,4 +1,4 @@
-<div id="header" style="padding-bottom: 55px">
+<div id="header">
     <?php
 
     use yii\bootstrap5\Html;
@@ -9,7 +9,7 @@
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md shadow-sm fixed-top',
+            'class' => 'navbar navbar-expand-md shadow-sm',
         ],
     ]);
 
