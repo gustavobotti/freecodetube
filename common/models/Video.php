@@ -58,7 +58,8 @@ class Video extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['video'], 'file', 'skipOnEmpty' => false, 'extensions' => 'mp4'],
+            [['video'], 'file', 'skipOnEmpty' => false, 'extensions' => 'mp4', 'on' => ['insert']],
+            [['video'], 'file', 'skipOnEmpty' => true, 'extensions' => 'mp4', 'on' => ['update']],
             [['video_id', 'title'], 'required'],
             [['description'], 'string'],
             [['status', 'has_thumbnail', 'created_at', 'updated_at', 'created_by'], 'integer'],
@@ -87,6 +88,14 @@ class Video extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
+        ];
+    }
+
+    public function getStatusLabels()
+    {
+        return [
+            self::STATUS_UNLISTED => 'Unlisted',
+            self::STATUS_PUBLISHED => 'Published'
         ];
     }
 

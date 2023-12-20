@@ -96,21 +96,27 @@ class VideoController extends Controller
      * Updates an existing Video model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $video_id Video ID
-     * @return string|\yii\web\Response
+     * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($video_id)
     {
         $model = $this->findModel($video_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'video_id' => $model->video_id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Video updated successfully.');
+                return $this->redirect(['view', 'video_id' => $model->video_id]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to update the video. Validation errors: ' . print_r($model->errors, true));
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
         ]);
     }
+
 
     /**
      * Deletes an existing Video model.

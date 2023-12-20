@@ -10,7 +10,10 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="video-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+            'action' => ['update', 'video_id' => $model->video_id],
+            'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
 
     <div class="row">
         <div class="col-sm-8">
@@ -21,6 +24,12 @@ use yii\bootstrap5\ActiveForm;
             <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-sm-4">
+
+            <div class="embed-responsive embed-responsive-16by9">
+                <video class="embed-responsive-item"
+                       src="<?php echo $model->getVideoLink() ?>"
+                        controls></video>
+            </div>
 
             <div class="mb-3">
                 <div class="text-muted">Video Link</div>
@@ -34,7 +43,7 @@ use yii\bootstrap5\ActiveForm;
                 <?php echo $model->video_name ?>
             </div>
 
-            <?= $form->field($model, 'status')->textInput() ?>
+            <?= $form->field($model, 'status')->dropDownList($model->getStatusLabels()) ?>
         </div>
     </div>
 
