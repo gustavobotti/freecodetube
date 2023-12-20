@@ -21,7 +21,7 @@
     } else {
         $menuItems[] = [
             'label' => 'Create',
-            'url' => ['/video/create'],
+            'url' => ['/video/create']
         ];
 
         $menuItems[] = [

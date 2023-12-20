@@ -32,7 +32,6 @@ class VideoController extends Controller
             ]
         );
     }
-
     /**
      * Lists all Video models.
      *
@@ -58,7 +57,6 @@ class VideoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
     /**
      * Displays a single Video model.
      * @param string $video_id Video ID
@@ -71,7 +69,6 @@ class VideoController extends Controller
             'model' => $this->findModel($video_id),
         ]);
     }
-
     /**
      * Creates a new Video model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -91,7 +88,6 @@ class VideoController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Updates an existing Video model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -103,10 +99,12 @@ class VideoController extends Controller
     {
         $model = $this->findModel($video_id);
 
+        $model->thumbnail = UploadedFile::getInstanceByName('thumbnail');
+
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Video updated successfully.');
-                return $this->redirect(['view', 'video_id' => $model->video_id]);
+                return $this->redirect(['update', 'video_id' => $model->video_id]);
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to update the video. Validation errors: ' . print_r($model->errors, true));
             }
@@ -116,8 +114,6 @@ class VideoController extends Controller
             'model' => $model,
         ]);
     }
-
-
     /**
      * Deletes an existing Video model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -131,7 +127,6 @@ class VideoController extends Controller
 
         return $this->redirect(['index']);
     }
-
     /**
      * Finds the Video model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
