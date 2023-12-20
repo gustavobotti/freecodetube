@@ -21,13 +21,13 @@
     } else {
         $menuItems[] = [
             'label' => 'Create',
-            'url' => ['/site/index'],
+            'url' => ['/video/create'],
         ];
 
         $menuItems[] = [
             'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
-            'linkOptions' => ['class' => 'btn logout text-decoration-none'],
+            'linkOptions' => ['class' => 'btn logout text-decoration-none', 'data-method' => 'post'],
             'options' => ['class' => 'd-flex'],
         ];
     }
