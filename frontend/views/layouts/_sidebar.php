@@ -10,7 +10,7 @@
         'items' => [
             [
                 'label' => 'Home',
-                'url' => ['/site/index'],
+                'url' => ['/video/index'],
             ],
             [
                 'label' => 'History',
