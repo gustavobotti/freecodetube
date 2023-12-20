@@ -6,6 +6,7 @@ use Imagine\Image\Box;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\helpers\FileHelper;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
@@ -115,6 +116,14 @@ class Video extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
+     * @return ActiveQuery
+    */
+    public function getViews() //views magic property
+    {
+        return $this->hasMany(VideoView::class, ['video_id' => 'video_id']);
     }
 
     /**
