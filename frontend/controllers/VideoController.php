@@ -37,6 +37,7 @@ class VideoController extends Controller
     }
     public function actionIndex()
     {
+        $this->layout = 'main';
         $dataProvider = new ActiveDataProvider([
             'query' => Video::find()->published()->latest()
         ]);
@@ -63,16 +64,9 @@ class VideoController extends Controller
             ->limit(10)
             ->all();
 
-        $comments = $video
-            ->getComments()
-            ->with(['createdBy'])
-            ->parent()
-            ->latest()
-            ->all();
 
         return $this->render('view', [
             'model' => $video,
-            'comments' => $comments,
             'similarVideos' => $similarVideos
         ]);
     }
