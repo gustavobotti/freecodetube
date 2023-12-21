@@ -42,7 +42,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/c/<username>' => '/channel/view'
+                '/c/<username>' => '/channel/view',
+                '/v/<username>' => '/video/view'
             ],
         ],
 

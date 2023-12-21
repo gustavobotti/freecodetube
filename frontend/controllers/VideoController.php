@@ -18,7 +18,7 @@ class VideoController extends Controller
         return [
             'acess' => [
                 'class' => AccessControl::class,
-                'only' => ['like', 'dislike'],
+                'only' => ['like', 'dislike', 'history'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -56,8 +56,24 @@ class VideoController extends Controller
         $videoView->created_at = time();
         $videoView->save();
 
+        $similarVideos = Video::find()
+            ->published()
+            ->byKeyword($video->title)
+            ->andWhere(['NOT', ['video_id' => $id]])
+            ->limit(10)
+            ->all();
+
+        $comments = $video
+            ->getComments()
+            ->with(['createdBy'])
+            ->parent()
+            ->latest()
+            ->all();
+
         return $this->render('view', [
-            'model' => $video
+            'model' => $video,
+            'comments' => $comments,
+            'similarVideos' => $similarVideos
         ]);
     }
 
