@@ -9,7 +9,7 @@ use yii\helpers\Url;
 $this->title = 'Channel ' . $channel->username . ' | ' . Yii::$app->name;
 ?>
 
-    <div class="jumbotron">
+    <div class="jumbotron" style="margin-left: 10px;">
         <h1 class="display-4"><?php echo $channel->username ?></h1>
         <hr class="my-4">
         <?php \yii\widgets\Pjax::begin() ?>

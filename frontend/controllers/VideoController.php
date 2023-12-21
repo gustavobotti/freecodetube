@@ -104,6 +104,45 @@ class VideoController extends Controller
             'model' => $video
         ]);
     }
+    public function actionSearch($keyword)
+    {
+        $this->layout = 'main';
+        $query = Video::find()
+            ->with('createdBy')
+            ->published()
+            ->latest();
+        if ($keyword) {
+            $query->byKeyword($keyword);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query
+        ]);
+
+        return $this->render('search', [
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
+    public function actionHistory()
+    {
+        $this->layout = 'main';
+        $query = Video::find()
+            ->alias('v')
+            ->innerJoin("(SELECT video_id, MAX(created_at) as max_date FROM video_view
+                    WHERE user_id = :userId
+                    GROUP BY video_id) vv", 'vv.video_id = v.video_id', [
+                'userId' => \Yii::$app->user->id
+            ])
+            ->orderBy("vv.max_date DESC");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query
+        ]);
+
+        return $this->render('history', [
+            'dataProvider' => $dataProvider
+        ]);
+    }
 
     protected function findVideo($id)
     {
